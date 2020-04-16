@@ -19,6 +19,8 @@
 		ABDA977E2448358D00D94C2F /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA977D2448358D00D94C2F /* SecondView.swift */; };
 		ABDA97822448F56F00D94C2F /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA97812448F56F00D94C2F /* VideoController.swift */; };
 		ABDA97842448F84300D94C2F /* Friendimals_concept.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA97832448F84300D94C2F /* Friendimals_concept.png */; };
+		ABDA9788244915C700D94C2F /* newPig.obj in Resources */ = {isa = PBXBuildFile; fileRef = ABDA9787244915C600D94C2F /* newPig.obj */; };
+		ABDA978E244918F600D94C2F /* trackingPig.scn in Resources */ = {isa = PBXBuildFile; fileRef = ABDA978D244918F600D94C2F /* trackingPig.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		ABDA977D2448358D00D94C2F /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
 		ABDA97812448F56F00D94C2F /* VideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		ABDA97832448F84300D94C2F /* Friendimals_concept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friendimals_concept.png; sourceTree = "<group>"; };
+		ABDA9787244915C600D94C2F /* newPig.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newPig.obj; sourceTree = "<group>"; };
+		ABDA978D244918F600D94C2F /* trackingPig.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = trackingPig.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 				04862EEA1FFA77D40044C865 /* Main.storyboard */,
 				04862EE61FFA77D40044C865 /* Models.scnassets */,
 				04862EED1FFA77D40044C865 /* Assets.xcassets */,
+				ABDA978D244918F600D94C2F /* trackingPig.scn */,
+				ABDA9787244915C600D94C2F /* newPig.obj */,
 				ABDA97832448F84300D94C2F /* Friendimals_concept.png */,
 				04862EEF1FFA77D40044C865 /* LaunchScreen.storyboard */,
 				04862EF21FFA77D40044C865 /* Info.plist */,
@@ -160,6 +166,8 @@
 				04862EEE1FFA77D40044C865 /* Assets.xcassets in Resources */,
 				ABDA97842448F84300D94C2F /* Friendimals_concept.png in Resources */,
 				04862EEC1FFA77D40044C865 /* Main.storyboard in Resources */,
+				ABDA978E244918F600D94C2F /* trackingPig.scn in Resources */,
+				ABDA9788244915C700D94C2F /* newPig.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

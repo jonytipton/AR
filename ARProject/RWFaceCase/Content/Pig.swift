@@ -43,7 +43,7 @@ class Pig: SCNNode {
     self.geometry = geometry
 
     // 1
-    guard let url = Bundle.main.url(forResource: "pig",
+    guard let url = Bundle.main.url(forResource: "newPig",
                                     withExtension: "scn",
                                     subdirectory: "Models.scnassets")
       else {

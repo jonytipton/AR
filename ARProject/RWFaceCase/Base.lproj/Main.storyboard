@@ -380,7 +380,7 @@ tiny digital creatures that are here to help!
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" sceneName="ToothbrushOBJ.obj" translatesAutoresizingMaskIntoConstraints="NO" id="KLd-sh-TIB">
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" sceneName="ToothBrush.scn" translatesAutoresizingMaskIntoConstraints="NO" id="KLd-sh-TIB">
                                 <rect key="frame" x="67" y="263" width="240" height="215"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </sceneKitView>
