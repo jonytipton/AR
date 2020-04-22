@@ -1,0 +1,18 @@
+import ARKit
+import UIKit
+
+class ViewController: UIViewController{
+var timer: Timer?
+var timeLeft = 120
+
+timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
+
+@obj func onTimerFires(){
+timeLeft -= 1
+timeLabel.text = "\(timeLeft) seconds left"
+
+if timeLeft <= 0 {
+timer?.invalidate()
+timer = nil
+}
+}
