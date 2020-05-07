@@ -1,9 +1,6 @@
 //
 //  VideoController.swift
-//  RWFaceCase
-//
 //  Created by Jonathan Tipton on 4/16/20.
-//  Copyright © 2020 Razeware. All rights reserved.
 //
 
 import UIKit
@@ -11,13 +8,16 @@ import AVKit
 import AVFoundation
 
 class VideoController: UIViewController {
-
+  
+    var player :AVPlayer?
+  
     override func prepare(for segue: UIStoryboardSegue, sender:Any?) {
         let destination = segue.destination as! AVPlayerViewController
-      let url = Bundle.main.url(forResource: "Tutvideo", withExtension: ".MP4")
+      let url = Bundle.main.url(forResource: "tutorial", withExtension: ".mp4")
         if let movieURL = url {
             destination.player = AVPlayer(url:movieURL)
-            destination.player?.play()
+            player = destination.player
+            player?.play()
         }
     }
     
@@ -31,12 +31,26 @@ class VideoController: UIViewController {
             }
         }
       playerViewController.exitsFullScreenWhenPlaybackEnds = true;
-    }
+      }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+  
+  override func viewDidAppear(_ animated: Bool) {
+    NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnd), name:
+    NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+  }
+  
+  
+  @objc func videoDidEnd(notification: NSNotification) {
+    print("video ended")
+    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    let newViewController = storyboard.instantiateViewController(identifier: "ActivityCustomization")
+    self.navigationController?.pushViewController(newViewController, animated: true)
+  }
+  
+  
 }
 

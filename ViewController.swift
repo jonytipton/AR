@@ -15,10 +15,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var playPauseLabel: UILabel!
     @IBOutlet weak var redoLabel: UILabel!
+    @IBOutlet weak var tutImage: UIImageView!
+    @IBAction func screenshotPressed(_ sender: Any) {
+        screenshot(of: sceneView)
+    }
+    
+    let backgroundMusic = Bundle.main.path(forResource: "backgroundMusic", ofType: ".mp3")
     var timerGoing: Bool = false
     var appTimer: Timer?
-    var timerCount = 45
+    var timerCount = 10
     var nextRound: Bool = true
+    var currentRound = 0
+    var audioPlayer = AVAudioPlayer()
     
     @IBAction func settingsPressed(_ sender: Any) {
         print("Need to stop timer. Settings PRESSED")
@@ -36,14 +44,25 @@ class ViewController: UIViewController {
             print("Need to STOP timer. Stop PRESSED")
             timerGoing = false
         }
+        
+        if (messageLabel.text == "COMPLETE! Next Round?") {
+            timerGoing = true
+            timerCount = 10
+        }
+        if (!tutImage.isHidden) {
+            tutImage.isHidden = true
+        }
     }
     @IBAction func redoPressed(_ sender: Any) {
         if (redoLabel.text == "?") {
             print("Need to RESET timer. Redo PRESSED")
             redoLabel.text = "Redo"
             timerGoing = false
-            timerCount = 45
+            timerCount = 10
             playPauseLabel.text = "Start"
+            DispatchQueue.main.async {
+                self.tutImage.isHidden = false
+            }
         }
         else {
             redoLabel.text = "?"
@@ -64,11 +83,24 @@ class ViewController: UIViewController {
         setupScene()
         createFaceGeometry()
         appTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
+        tutImage.isHidden = true
+        let backgroundMusicURL = URL(fileReferenceLiteralResourceName: "backgroundMusic.mp3")
+        do {
+            audioPlayer = try AVAudioPlayer.init(contentsOf: backgroundMusicURL)
+            audioPlayer.play()
+            print("Play audio")
+        }
+        catch {
+            print(error)
+        }
     }
     
     @objc func runTimer() {
         if (timerGoing) {
             timerCount -= 1
+        }
+        if (timerCount == 0) {
+            timerGoing = false
         }
         print("Timer at: ", timerCount)
     }
@@ -125,13 +157,21 @@ extension ViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         anchorNode = node
         setupFaceNodeContent()
+        DispatchQueue.main.async {
+            self.tutImage.isHidden = false
+        }
     }
-        
+    
     // Tag: ARFaceGeometryUpdate
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let faceAnchor = anchor as? ARFaceAnchor else {return}
-        if (timerCount <= 0) {
+        if (timerCount == 0) {
             timerGoing = false
+            currentRound += 1
+            print("New Round!", currentRound)
+            DispatchQueue.main.async {
+                self.tutImage.isHidden = false
+            }
         }
         if (timerGoing) {
             updateMessage(text: "Time Remaining: \(timerCount)")
@@ -148,9 +188,37 @@ extension ViewController: ARSCNViewDelegate {
         else {
             updateMessage(text: "ALL DONE!")
             //FUNCTION TO CLOSE AR/CHANGE VIEW
+            //play award animation?
         }
         pig?.update(withFaceAnchor: faceAnchor)
+        if (timerCount == 0) {
+            timerCount = 10
+        }
         
+        DispatchQueue.main.async {
+            if (self.currentRound == 0) {
+                self.tutImage.image = UIImage(named: "brushBottom.png")
+            }
+            else if (self.currentRound == 1) {
+                self.tutImage.image = UIImage(named: "brushTop.png")
+            }
+            else if (self.currentRound == 2) {
+                self.tutImage.image = UIImage(named: "brushCircle.png")
+            }
+        }
+        if (currentRound == 3) {
+            goToReward()
+        }
+    }
+    
+    func goToReward() {
+        print("AR ended")
+        DispatchQueue.main.async {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewController = storyboard.instantiateViewController(identifier: "Winner")
+            self.navigationController?.pushViewController(newViewController, animated: true)
+            self.appTimer?.invalidate()
+        }
     }
     
     
@@ -230,4 +298,18 @@ private extension ViewController {
             self.messageLabel.text = text
         }
     }
+    func screenshot(of view: ARSCNView) {
+        let renderedImage = sceneView.snapshot()
+        
+        UIImageWriteToSavedPhotosAlbum(renderedImage, self, #selector(imageWasSaved), nil)
+    }
+    
+    @objc func imageWasSaved(_ image: UIImage, error: Error?, context: UnsafeMutableRawPointer) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        print("image saved")
+    }
+    
 }
